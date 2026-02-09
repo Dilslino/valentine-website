@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.9.3/confetti.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cursor -->
+    <div class="cursor-glow"></div>
+
+    <!-- Canvas -->
+    <canvas id="main-canvas"></canvas>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="pages-wrapper" id="pagesWrapper">
+
+        <!-- Section 1: Dramatic Opening -->
+        <section class="section section-1">
+            <div class="content">
+                <!-- Floating Elements Background -->
+                <div class="floating-elements">
+                    <span class="float-heart">♥</span>
+                    <span class="float-heart">♥</span>
+                    <span class="float-heart">♥</span>
+                    <span class="float-heart">♥</span>
+                    <span class="float-heart">♥</span>
+                    <span class="float-star">✦</span>
+                    <span class="float-star">✦</span>
+                    <span class="float-star">✦</span>
+                </div>
+
+                <!-- Main Opening Content -->
+                <div class="opening-wrapper">
+                    <!-- Teaser Text -->
+                    <div class="teaser-text">
+                        <span class="teaser-line teaser-1">psst...</span>
+                        <span class="teaser-line teaser-2">ini buat kamu</span>
+                    </div>
+
+                    <!-- Love Envelope / Paper Plane Container -->
+                    <div class="envelope-container" id="envelopeContainer">
+                        <!-- Envelope -->
+                        <div class="love-envelope" id="loveEnvelope">
+                            <div class="envelope-back"></div>
+                            <div class="envelope-letter">
+                                <span class="letter-heart">♥</span>
+                            </div>
+                            <div class="envelope-front"></div>
+                            <div class="envelope-flap"></div>
+                        </div>
+
+                        <!-- Paper Plane (hidden initially) -->
+                        <div class="paper-plane" id="paperPlane">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="plane-svg">
+                                <defs>
+                                    <linearGradient id="planeGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#FFF9FA"/>
+                                        <stop offset="30%" stop-color="#FFE4EC"/>
+                                        <stop offset="70%" stop-color="#FFD6E0"/>
+                                        <stop offset="100%" stop-color="#FF8FAB"/>
+                                    </linearGradient>
+                                    <filter id="planeGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                        <feGaussianBlur stdDeviation="1" result="blur"/>
+                                        <feMerge>
+                                            <feMergeNode in="blur"/>
+                                            <feMergeNode in="SourceGraphic"/>
+                                        </feMerge>
+                                    </filter>
+                                </defs>
+                                <path fill="url(#planeGradient)" filter="url(#planeGlow)" stroke="#FF8FAB" stroke-width="0.3"
+                                    d="M3.478 2.404a.75.75 0 0 0-.926.941l2.432 7.905H13.5a.75.75 0 0 1 0 1.5H4.984l-2.432 7.905a.75.75 0 0 0 .926.94 60.519 60.519 0 0 0 18.445-8.986.75.75 0 0 0 0-1.218A60.517 60.517 0 0 0 3.478 2.404Z"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="scroll-cta" id="scrollCta">
+                        <span class="cta-text">tap untuk buka~</span>
+                        <div class="cta-arrow">
+                            <span>↓</span>
+                            <span>↓</span>
+                            <span>↓</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sparkle Particles -->
+                <div class="opening-sparkles" id="openingSparkles"></div>
+
+                <!-- Canvas for plane animation -->
+                <canvas id="planeCanvas"></canvas>
+            </div>
+        </section>
+
+        <!-- Section 2: Intro + GIF -->
+        <section class="section section-2">
+            <div class="content">
+                <div class="gif-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDd0OWx5YzBmMnQ0ZGRhZTFtdHh4aWFtaGx6OXNqcnBiaWQ3b2JjZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/M90mJvfWfd5mbUuULX/giphy.gif" alt="cute wave" class="gif cute-gif">
+                </div>
+                <div class="text-block">
+                    <p class="line line-1">haii kamu~</p>
+                    <p class="line line-2">iya kamu yang lagi scroll ini</p>
+                    <p class="line line-3">sambil senyum-senyum sendiri ♡</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Deep Text 1 -->
+        <section class="section section-3">
+            <div class="content">
+                <div class="text-block center">
+                    <p class="line big">tau ga sih,</p>
+                    <p class="line medium">aku tuh orangnya susah banget ngerasa nyaman sama orang</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: Deep Text 2 + GIF -->
+        <section class="section section-4">
+            <div class="content">
+                <div class="text-block center">
+                    <p class="line medium">tapi sama kamu...</p>
+                    <p class="line big highlight">beda.</p>
+                </div>
+                <div class="gif-container small">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNnFqOHNibmRpMGk5a3J5aXc3bGNtOG5uaDBiZ2M3OXRtN3BhZnc1aiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xT0GqssRweIhlz209i/giphy.gif" alt="heart eyes" class="gif">
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 5: Home -->
+        <section class="section section-5">
+            <div class="content">
+                <div class="text-block">
+                    <p class="line small">kamu tuh kayak</p>
+                    <p class="line big">home</p>
+                    <p class="line small">yang selama ini aku cari</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: Feelings + GIF -->
+        <section class="section section-6">
+            <div class="content">
+                <div class="gif-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnRsb2F0dW1nbmNqMG1zdWdhYnNsaWRwcm5lZW4yOGE1d2JpejlxZSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/l0MYAs5E2oIDCq9So/giphy.gif" alt="nervous" class="gif">
+                </div>
+                <div class="text-block left-align">
+                    <p class="line fade-line">tiap dapet chat dari kamu,</p>
+                    <p class="line fade-line">jantung aku langsung deg-degan</p>
+                    <p class="line fade-line">kayak mau ujian dadakan</p>
+                    <p class="line fade-line highlight-soft">padahal cuma nanya "udah makan belum?"</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 7: Clingy + GIF -->
+        <section class="section section-7">
+            <div class="content">
+                <div class="text-block center">
+                    <p class="line medium">dan jujur...</p>
+                    <p class="line big">aku tuh clingy banget</p>
+                    <p class="line medium">kalo udah sama kamu</p>
+                </div>
+                <div class="gif-container small">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExMm5xMjA3NnB1NTZzYTFyNmt3MjM1dnk0eWNzbTN2NTRsMmkzaDd5eSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/lTQF0ODLLjhza/giphy.gif" alt="clingy cat" class="gif">
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 8: Core Memory -->
+        <section class="section section-8">
+            <div class="content">
+                <div class="text-block center">
+                    <p class="line small-caps">setiap momen sama kamu</p>
+                    <p class="line big gradient-text">jadi core memory</p>
+                    <p class="line small-caps">yang ga bakal aku lupa</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 9: Funny confession + GIF -->
+        <section class="section section-9">
+            <div class="content">
+                <div class="gif-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcGJ1Y2VrMjZtNm5hN2UxcmJ2ZnVnNWJrcnRxZmg1eWd1ZXpod2NvYSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oEjI4sFlp73fvEYgw/giphy.gif" alt="thinking" class="gif">
+                </div>
+                <div class="text-block center">
+                    <p class="line medium">sebenernya aku mau ngomong</p>
+                    <p class="line medium">dari dulu...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 10: Cupid Arrow Animation -->
+        <section class="section section-10">
+            <div class="content">
+                <!-- Canvas for arrow trail -->
+                <canvas id="arrowCanvas"></canvas>
+
+                <!-- Target Heart - Heroicons Heart -->
+                <div class="mega-heart-container" id="targetHeartContainer">
+                    <svg class="mega-heart target-heart" id="targetHeart" viewBox="0 0 24 24">
+                        <defs>
+                            <linearGradient id="heartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#FF6B9D"/>
+                                <stop offset="50%" stop-color="#FF3366"/>
+                                <stop offset="100%" stop-color="#E91E63"/>
+                            </linearGradient>
+                            <filter id="heartGlow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="2" result="blur"/>
+                                <feMerge>
+                                    <feMergeNode in="blur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
+                            <filter id="heartShadow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#FF3366" flood-opacity="0.5"/>
+                            </filter>
+                        </defs>
+                        <path fill="url(#heartGrad)" filter="url(#heartGlow)"
+                            d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"/>
+                    </svg>
+                    <div class="heart-glow-effect"></div>
+                    <div class="pulse-rings">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <div class="hit-flash"></div>
+                </div>
+                <div class="explosion-container" id="explosionContainer"></div>
+            </div>
+        </section>
+
+        <!-- Section 11: Transition -->
+        <section class="section section-11">
+            <div class="content">
+                <div class="text-block center">
+                    <p class="line medium">jadi, buat kamu yang baca ini...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 12: Final Message Part 1 -->
+        <section class="section section-12">
+            <div class="content">
+                <div class="final-message">
+                    <p class="msg-line line-1">
+                        <span class="word">Ini</span>
+                        <span class="word">bukan</span>
+                        <span class="word">kebetulan.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 13: Final Message Part 2 -->
+        <section class="section section-13">
+            <div class="content">
+                <div class="final-message">
+                    <p class="msg-line line-2">
+                        <span class="word">Ini</span>
+                        <span class="word">emang</span>
+                        <span class="word special">kamu.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 14: Final Confession + GIF -->
+        <section class="section section-14">
+            <div class="content">
+                <div class="gif-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmR5dWp3dGZiNGc3MTZtYWNhNDQzaHhkc2tycW9uZW1iemkyZGl6MiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3o7TKoWXm3okO1kgHC/giphy.gif" alt="heart" class="gif">
+                </div>
+                <div class="text-block center">
+                    <p class="line small">dari semua orang di dunia ini,</p>
+                    <p class="line big">aku milih kamu</p>
+                    <p class="line small">dan bakal terus milih kamu</p>
+                </div>
+                <div class="heart-decoration">
+                    <span class="deco-line"></span>
+                    <span class="deco-heart">♥</span>
+                    <span class="deco-line"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 15: Promise + GIF -->
+        <section class="section section-15">
+            <div class="content">
+                <div class="text-block center">
+                    <p class="line medium">mau nemenin aku terus kan?</p>
+                </div>
+                <div class="gif-container">
+                    <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHl2aXNocWE3bGQ1bHdxbWRldDFpeXNkdWo0aHRlcnZidXFsYm9mdSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/MDJ9IbxxvDUQM/giphy.gif" alt="please" class="gif">
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 16: Ending -->
+        <section class="section section-16">
+            <div class="content">
+                <div class="ending">
+                    <p class="ending-text">Happy Valentine's Day</p>
+                    <p class="ending-sub">untuk orang paling spesial di hidup aku ♡</p>
+                    <div class="gif-container small">
+                        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExaXF5NnU5bHE5c2NtMGd1ZWN6aGVsMnRkbHU5ZmdrZzNuNHNkdnd4aCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/26BRv0ThflsHCqDrG/giphy.gif" alt="love" class="gif">
+                    </div>
+                    <div class="floating-hearts">
+                        <span>♥</span>
+                        <span>♥</span>
+                        <span>♥</span>
+                        <span>♥</span>
+                        <span>♥</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sparkles" id="sparkles"></div>
+            <!-- Fireworks Canvas -->
+            <canvas id="fireworksCanvas"></canvas>
+        </section>
+
+        </div><!-- End pages-wrapper -->
+    </main>
+
+    <!-- Page Indicator -->
+    <div class="page-indicator" id="pageIndicator"></div>
+
+    <!-- Navigation Arrows -->
+    <div class="nav-arrows">
+        <button class="nav-arrow" id="prevBtn">↑</button>
+        <button class="nav-arrow" id="nextBtn">↓</button>
+    </div>
+
+    <!-- Page Counter -->
+    <div class="page-counter" id="pageCounter">1 / 16</div>
+
+    <!-- Audio Toggle -->
+    <button class="audio-btn" id="audioBtn">
+        <span class="on">♪</span>
+        <span class="off">♪</span>
+    </button>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="https://assets.mixkit.co/music/preview/mixkit-serene-view-443.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
