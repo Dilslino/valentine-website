@@ -714,214 +714,22 @@ body {
 }
 
 /* ========================================
-   CUPID ARROW ANIMATION (Section 10)
+   LOVE VIDEO (Section 10)
    ======================================== */
-.section-10 .content {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.section-10 {
+    padding: 0 !important;
+    background: #000 !important;
     overflow: hidden;
 }
 
-/* Arrow Canvas */
-#arrowCanvas {
+.love-video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 15;
-}
-
-/* Mega Heart Container */
-.mega-heart-container {
-    position: relative;
-    width: clamp(200px, 50vw, 400px);
-    height: clamp(200px, 50vw, 400px);
-    margin: 0 auto;
-    z-index: 10;
-}
-
-.mega-heart {
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transform: scale(0);
-    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    filter: drop-shadow(0 0 40px var(--red-love)) drop-shadow(0 0 80px rgba(255, 51, 102, 0.4));
-}
-
-.mega-heart.visible {
-    opacity: 1;
-    transform: scale(1);
-}
-
-/* Heart Glow Effect */
-.heart-glow-effect {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 120%;
-    height: 120%;
-    transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(255, 51, 102, 0.3) 0%, transparent 60%);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.5s;
-}
-
-.mega-heart.visible ~ .heart-glow-effect {
-    opacity: 1;
-    animation: glowPulse 2s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
-}
-
-/* Hit Flash Effect */
-.hit-flash {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,51,102,0.5) 50%, transparent 70%);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.hit-flash.active {
-    animation: flashBurst 0.5s ease-out forwards;
-}
-
-@keyframes flashBurst {
-    0% { width: 0; height: 0; opacity: 1; }
-    50% { width: 400px; height: 400px; opacity: 0.8; }
-    100% { width: 600px; height: 600px; opacity: 0; }
-}
-
-/* Pulse Rings */
-.pulse-rings {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    pointer-events: none;
-}
-
-.pulse-rings span {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 100%;
-    height: 100%;
-    transform: translate(-50%, -50%);
-    border: 2px solid var(--pink-rose);
-    border-radius: 50%;
-    opacity: 0;
-}
-
-.pulse-rings.active span {
-    animation: pulseOut 2s ease-out infinite;
-}
-
-.pulse-rings span:nth-child(2) { animation-delay: 0.6s; }
-.pulse-rings span:nth-child(3) { animation-delay: 1.2s; }
-
-@keyframes pulseOut {
-    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.6; }
-    100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-}
-
-.explosion-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-    width: 100%;
-    height: 100%;
-}
-
-/* Aesthetic Post-Explosion Effects */
-.explosion-container .ambient-glow-overlay {
-    animation: ambientPulse 4s ease-in-out infinite;
-}
-
-@keyframes ambientPulse {
-    0%, 100% {
-        opacity: 0.8;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.05);
-    }
-}
-
-/* Dreamy heart float animation */
-@keyframes dreamyFloat {
-    0% {
-        transform: translateY(0) rotate(0deg);
-        opacity: 0;
-    }
-    10% {
-        opacity: 0.8;
-    }
-    90% {
-        opacity: 0.8;
-    }
-    100% {
-        transform: translateY(-100vh) rotate(20deg);
-        opacity: 0;
-    }
-}
-
-/* Soft glow animation for hearts */
-@keyframes softGlow {
-    0%, 100% {
-        filter: drop-shadow(0 0 10px currentColor) blur(0px);
-    }
-    50% {
-        filter: drop-shadow(0 0 20px currentColor) blur(1px);
-    }
-}
-
-/* Twinkling stars */
-@keyframes twinkleStar {
-    0%, 100% {
-        opacity: 0.3;
-        transform: scale(0.8);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.2);
-    }
-}
-
-/* Bokeh float */
-@keyframes bokehFloat {
-    0%, 100% {
-        transform: translate(0, 0) scale(1);
-    }
-    25% {
-        transform: translate(20px, -20px) scale(1.1);
-    }
-    50% {
-        transform: translate(-10px, 10px) scale(0.9);
-    }
-    75% {
-        transform: translate(-20px, -10px) scale(1.05);
-    }
+    object-fit: cover;
+    z-index: 5;
 }
 
 /* ========================================
