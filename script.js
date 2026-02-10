@@ -311,21 +311,10 @@ function initPageNavigation() {
     sections = document.querySelectorAll('.section');
     totalPages = sections.length;
 
-    // Create page indicators
-    createPageIndicators();
-
     // Set first page as active
     sections[0].classList.add('active');
-    updatePageCounter();
 
-    // Button navigation
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-
-    prevBtn.addEventListener('click', () => goToPage(currentPage - 1));
-    nextBtn.addEventListener('click', () => goToPage(currentPage + 1));
-
-    // Keyboard navigation
+    // Keyboard navigation (PC)
     document.addEventListener('keydown', (e) => {
         if (isAnimating) return;
 
@@ -338,30 +327,50 @@ function initPageNavigation() {
         }
     });
 
-    // Touch/Swipe navigation
+    // Touch/Swipe navigation (Mobile) - improved precision
     let touchStartY = 0;
-    let touchEndY = 0;
+    let touchStartX = 0;
+    let touchStartTime = 0;
+    let isTouching = false;
 
     document.addEventListener('touchstart', (e) => {
-        touchStartY = e.changedTouches[0].screenY;
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+        touchStartTime = Date.now();
+        isTouching = true;
     }, { passive: true });
 
+    document.addEventListener('touchmove', (e) => {
+        // Prevent browser scroll to avoid content shifting
+        if (isTouching) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
     document.addEventListener('touchend', (e) => {
-        if (isAnimating) return;
+        if (!isTouching || isAnimating) {
+            isTouching = false;
+            return;
+        }
+        isTouching = false;
 
-        touchEndY = e.changedTouches[0].screenY;
-        const diff = touchStartY - touchEndY;
+        const touchEndY = e.changedTouches[0].clientY;
+        const touchEndX = e.changedTouches[0].clientX;
+        const diffY = touchStartY - touchEndY;
+        const diffX = touchStartX - touchEndX;
+        const timeDiff = Date.now() - touchStartTime;
 
-        if (Math.abs(diff) > 50) {
-            if (diff > 0) {
-                goToPage(currentPage + 1);
+        // Only trigger if vertical swipe is dominant and significant
+        if (Math.abs(diffY) > Math.abs(diffX) && Math.abs(diffY) > 30 && timeDiff < 800) {
+            if (diffY > 0) {
+                goToPage(currentPage + 1); // Swipe up = next
             } else {
-                goToPage(currentPage - 1);
+                goToPage(currentPage - 1); // Swipe down = prev
             }
         }
     }, { passive: true });
 
-    // Mouse wheel navigation
+    // Mouse wheel navigation (PC)
     let wheelTimeout = null;
     document.addEventListener('wheel', (e) => {
         e.preventDefault();
@@ -379,24 +388,10 @@ function initPageNavigation() {
         }
     }, { passive: false });
 
-    // Update buttons state
-    updateNavButtons();
-
     // Trigger first page animation
     setTimeout(() => {
         triggerPageAnimation(0);
     }, 100);
-}
-
-function createPageIndicators() {
-    const indicator = document.getElementById('pageIndicator');
-
-    for (let i = 0; i < totalPages; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'page-dot' + (i === 0 ? ' active' : '');
-        dot.addEventListener('click', () => goToPage(i));
-        indicator.appendChild(dot);
-    }
 }
 
 function goToPage(pageIndex) {
@@ -409,9 +404,9 @@ function goToPage(pageIndex) {
     const oldPage = currentPage;
     currentPage = pageIndex;
 
-    // Update wrapper position
+    // Update wrapper position using dvh for mobile precision
     const wrapper = document.getElementById('pagesWrapper');
-    wrapper.style.transform = `translateY(-${currentPage * 100}vh)`;
+    wrapper.style.transform = `translateY(-${currentPage * 100}%)`;
 
     // Update active states
     sections[oldPage].classList.remove('active');
@@ -422,29 +417,8 @@ function goToPage(pageIndex) {
         isAnimating = false;
     }, 400);
 
-    // Update indicators
-    document.querySelectorAll('.page-dot').forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentPage);
-    });
-
     // Reset old page animations
     resetPageAnimation(oldPage);
-
-    updateNavButtons();
-    updatePageCounter();
-}
-
-function updateNavButtons() {
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-
-    prevBtn.disabled = currentPage === 0;
-    nextBtn.disabled = currentPage === totalPages - 1;
-}
-
-function updatePageCounter() {
-    const counter = document.getElementById('pageCounter');
-    counter.textContent = `${currentPage + 1} / ${totalPages}`;
 }
 
 // ==========================================
@@ -660,9 +634,9 @@ function initCursor() {
         }
     });
 
-    // Spawn hearts on click (but not on buttons)
+    // Spawn hearts on click (but not on audio button)
     document.addEventListener('click', (e) => {
-        if (e.target.closest('.nav-arrow, .audio-btn, .page-dot')) return;
+        if (e.target.closest('.audio-btn')) return;
         spawnHeartBurst(e.clientX, e.clientY, 12);
     });
 }
